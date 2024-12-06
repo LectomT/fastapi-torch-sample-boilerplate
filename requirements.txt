@@ -1,0 +1,5 @@
+transformers
+ffmpeg-python==0.2.0
+Jinja2
+fastapi
+uvicorn[standard]
