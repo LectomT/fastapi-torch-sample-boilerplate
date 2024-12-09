@@ -1,6 +1,8 @@
 import uvicorn
 import torch
+import math, time
 from fastapi import FastAPI, status, Path, Query, File, UploadFile, Form, Request
+from pydantic import BaseModel
 from fastapi.responses import HTMLResponse
 from app import *
 
@@ -10,7 +12,6 @@ class HealthCheck(BaseModel):
     """Response model to validate and return when performing a health check."""
     global request_id
     status: str = "OK"
-    sttid: str = request_id
     timestamp: int = math.floor(time.time())
 
 @app.get(
@@ -32,7 +33,7 @@ async def get_health() -> HealthCheck:
         HealthCheck: Returns a JSON response with the health status
     """
     global request_id
-    return HealthCheck(status="OK", sttid=request_id, timestamp=math.floor(time.time()))
+    return HealthCheck(status="OK", timestamp=math.floor(time.time()))
 
 
 @app.get("/")
