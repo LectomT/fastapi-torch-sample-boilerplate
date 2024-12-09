@@ -39,6 +39,8 @@ torch-base-boilerplate
 
 ### 빌드
 ' docker compose build '
+> dockerfile상 변화가 없으나 디펜던시 변화 등으로 재빌드가 필요할 때는 --no-cache 옵션을 주어 캐시를 이용하지 않고 재빌드를 할 수 있도록 한다.
+
 
 ### 실행
 ' docker compose up '
@@ -62,3 +64,12 @@ sudo usermod -aG docker $USER
 ```
 * WSL상에 설치는 VSCode로 WSL에 리모트 연결한 상태에서 Extension 설치로도 가능하다
 
+### GPU 이용하기
+```
+$ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+  && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+$ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+```
+> $nvidia-smi 로 GPU 인식을 확인한다.
