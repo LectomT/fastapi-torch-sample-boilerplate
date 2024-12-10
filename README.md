@@ -64,7 +64,7 @@ sudo usermod -aG docker $USER
 ```
 * WSL상에 설치는 VSCode로 WSL에 리모트 연결한 상태에서 Extension 설치로도 가능하다
 
-### GPU 이용하기
+### Nvidia GPU 이용하기
 ```
 $ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
   && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
