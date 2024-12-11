@@ -50,9 +50,9 @@ torch-base-boilerplate
 최신 버전 활용이 원칙이나 requirements.txt 에 버전을 픽스하는 방식으로도 사용할 수 있다. 프로덕션 배포는 Docker Image에 Commit해서 유지하길 권장
   
 ## 부록
-### 베어매탈에 도커 설치하기
+### 베어메탈에 도커 설치하기
 ```
-#Ubuntu 22.04.3 기준
+#Ubuntu 24.04.1 기준
 sudo sed -i 's/archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -73,3 +73,45 @@ $ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --de
 $ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
 ```
 > $nvidia-smi 로 GPU 인식을 확인한다.
+
+### Ruff 설정
+IDE를 다른 것을 사용할 수 있고 각각 vs code 설정은 다를 수 있으니
+```
+# settings.json
+"[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.insertSpaces": true,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll": "explicit",
+          "source.organizeImports": "explicit",
+          "editor.insertSpaces": "explicit"
+        }
+    }
+```
+
+```
+# pyproject.toml
+line-length = 120
+indent-width = 4
+
+[lint]
+# 기본적으로 Pyflakes('F')와 pycodestyle('E') 코드의 하위 집합을 활성화합니다.
+select = ["E4", "E7", "E9", "F"]
+ignore = []
+
+# 활성화된 모든 규칙에 대한 수정 허용.
+fixable = ["ALL"]
+unfixable = []
+
+# 밑줄 접두사가 붙은 경우 사용하지 않는 변수를 허용합니다.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+```

@@ -10,7 +10,6 @@ services:
       - ./cache:/root/.cache/
     working_dir: /opt/workspace
     entrypoint: uvicorn api:app --host 0.0.0.0 --port 7890 --reload
-    restart: always
 
     ports:
       - 7890:7890
